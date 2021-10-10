@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Hyper news</h2>
+{% regroup news|dictsortreversed:"created" by created|slice:":-9" as news_list %}
+{% for day in news_list %}
+
+    <h4>{{ day.grouper }}</h4>
+    <ul>
+        {% for new in day.list %}
+            <li><a href="/news/{{ new.link }}/">{{ new.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endfor %}
+
+<a href="/news/create/">Create new</a>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>News</title>
+</head>
+<body>
+
+<main>
+    {% if article %}
+        <h2>{{ article.title }}</h2>
+        <p>{{ article.created }}</p>
+        <p>{{ article.text }}</p>
+    {% endif %}
+
+    <a href="{% url 'news:news' %}">News</a>
+</main>
+
+</body>
+</html>
